@@ -1,0 +1,28 @@
+﻿@{
+    string GetSortUrlWithSortProperty(string sortBy, string sortOrder)
+        => $"searchBy={ViewBag.CurrentSearchBy}&searchString={ViewBag.CurrentSearchString}&sortBy={sortBy}&sortOrder={sortOrder}";
+
+    bool IsAscendingOrder(string currentSortOrder)
+        => SortOrderOptions.ASC.ToString().Equals(currentSortOrder, StringComparison.OrdinalIgnoreCase);
+
+    SortOrderOptions GetNextSortOrderOptions()
+        => IsAscendingOrder(ViewBag.CurrentSortOrder) ? SortOrderOptions.DESC : SortOrderOptions.ASC;
+
+    string GetIconSortClass()
+        => ViewBag.CurrentSortOrder == SortOrderOptions.ASC.ToString() ? @"fa-solid fa-sort-up" : @"fa-solid fa-sort-down";
+}
+@{
+    string sortUrl = 
+        ViewBag.CurrentSortby != ViewBag.ColumnName ? 
+            GetSortUrlWithSortProperty(ViewBag.ColumnName, SortOrderOptions.ASC.ToString()) : 
+                GetSortUrlWithSortProperty(ViewBag.ColumnName, GetNextSortOrderOptions().ToString());
+
+    string iconSort = GetIconSortClass();
+}
+<th>
+    <a href="~/persons/index?@sortUrl">@ViewBag.DisplayName</a>
+    @if (ViewBag.CurrentSortBy == ViewBag.ColumnName)
+    {
+        <i class="@iconSort"></i>
+    }
+</th>

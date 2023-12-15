@@ -1,0 +1,26 @@
+﻿@model PersonUpdateRequest
+
+@{
+    ViewBag.Title = "Delete Person";
+}
+
+<h1>Delete Person</h1>
+<h2>Are you sure to delete this person ?</h2>
+
+<div style="margin: auto; max-width: 70%;">
+    <form asp-controller="Persons" asp-action="Delete" method="post">
+        <input type="hidden" asp-for="PersonID" />
+
+        <div class="pt">
+            <div class="w-25"><label class="form-label" asp-for="PersonName">Person Name</label></div>
+            <div class="flex-1">
+                <input class="form-input" asp-for="PersonName" disabled/>
+            </div>
+        </div>
+
+        <div class="flex">
+            <button class="button button-red-back">Delete</button>
+            <a asp-controller="Persons" asp-action="Index">Back to Persons list</a>
+        </div>
+    </form>
+</div>
